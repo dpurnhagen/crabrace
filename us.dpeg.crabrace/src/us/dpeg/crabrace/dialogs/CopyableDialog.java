@@ -16,6 +16,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -39,44 +40,30 @@ public class CopyableDialog extends Dialog {
 	}
 
 	/* (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
+	 */
+	@Override
+	protected void buttonPressed(int buttonId) {
+		if (buttonId == COPY_ID) {
+			final Color background = text.getBackground();
+			text.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+			final Clipboard cb = new Clipboard(Display.getDefault().getActiveShell().getDisplay());
+			final TextTransfer textTransfer = TextTransfer.getInstance();
+			final Object[] data = new Object[] { message };
+			final Transfer[] dataTypes = new Transfer[] { textTransfer };
+			cb.setContents(data, dataTypes);
+			text.setBackground(background);
+		}
+		super.buttonPressed(buttonId);
+	}
+
+	/* (non-Javadoc)
 	 * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
 	 */
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(title);
-	}
-
-	/**
-	 * Create contents of the dialog.
-	 * @param parent
-	 */
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite container = (Composite) super.createDialogArea(parent);
-		
-		text = new Text(container, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		if (message != null) {
-			text.setText(message);
-		}
-
-		return container;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.Dialog#buttonPressed(int)
-	 */
-	@Override
-	protected void buttonPressed(int buttonId) {
-		if (buttonId == COPY_ID) {
-			final Clipboard cb = new Clipboard(Display.getDefault().getActiveShell().getDisplay());
-			final TextTransfer textTransfer = TextTransfer.getInstance();
-			final Object[] data = new Object[] { message };
-			final Transfer[] dataTypes = new Transfer[] { textTransfer };
-			cb.setContents(data, dataTypes);
-		}
-		super.buttonPressed(buttonId);
 	}
 
 	/**
@@ -91,12 +78,28 @@ public class CopyableDialog extends Dialog {
 	}
 
 	/**
-	 * Return the initial size of the dialog.
+	 * Create contents of the dialog.
+	 * @param parent
 	 */
-//	@Override
-//	protected Point getInitialSize() {
-//		return new Point(450, 300);
-//	}
+	@Override
+	protected Control createDialogArea(Composite parent) {
+		Composite container = (Composite) super.createDialogArea(parent);
+
+		text = new Text(container, SWT.BORDER | SWT.READ_ONLY | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		if (message != null) {
+			text.setText(message);
+		}
+
+		return container;
+	}
+
+	/**
+	 * @param message the message to set
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	/**
 	 * @param title the title to set

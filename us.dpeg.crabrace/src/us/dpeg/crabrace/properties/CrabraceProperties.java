@@ -2,7 +2,7 @@
  * Copyright (c) 2016 Donald Purnhagen
  *
  * Description:
- *     Example of a property page using composite panels controlled by 
+ *     Example of a property page using composite panels controlled by
  *     a combo selection.
  *
  * Contributors:
@@ -15,6 +15,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -26,6 +28,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 
 import us.dpeg.crabrace.controls.ComboComposites;
+import us.dpeg.crabrace.dialogs.CopyableDialog;
 
 public class CrabraceProperties extends PropertyPage {
 
@@ -42,6 +45,7 @@ public class CrabraceProperties extends PropertyPage {
 	private static final String OWNER_PROPERTY = "OWNER";
 	private static final String OWNER_KEY = "Owner";
 	private static final String OWNER_DEFAULT = "John Doe";
+	private static final String OWNER_BUTTON = "Information...";
 
 	private Text txtOwner;
 	private Button btnNimble;
@@ -115,9 +119,34 @@ public class CrabraceProperties extends PropertyPage {
 
 		// Owner text field
 		txtOwner = new Text(cOwner, SWT.SINGLE | SWT.BORDER);
-		GridData gdTxtOwner = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		//gdTxtOwner.widthHint = convertWidthInCharsToPixels(50);
-		txtOwner.setLayoutData(gdTxtOwner);
+		txtOwner.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		// Blank label to skip a cell
+		new Label(cOwner, SWT.NONE);
+
+		// Button to test CopyableDialog
+		Button btnInfo = new Button(cOwner, SWT.PUSH);
+		btnInfo.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+		btnInfo.setText(OWNER_BUTTON);
+		btnInfo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				final String owner = txtOwner.getText();
+				String message;
+				if (OWNER_DEFAULT.equalsIgnoreCase(owner)) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("Blah\n\nBlah blah blah blah. Blah blah, blah blah-blah, blah blah. ");
+					sb.append("Blah, blah blah blah blah. Blah blah, blah blah-blah, blah blah. Blah!");
+					message = sb.toString();
+				} else {
+					message = "No information exists for: " + owner + "\n";
+				}
+				CopyableDialog dialog = new CopyableDialog(getShell(), "Owner Information");
+				dialog.setMessage(message);
+				dialog.open();
+			}
+		});
 
 		// Populate fields
 		IResource element = (IResource) getElement();
