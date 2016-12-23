@@ -2,7 +2,7 @@
  * Copyright (c) 2016 Donald Purnhagen
  *
  * Description:
- *     Set of compoaite panels controlled by a combo selection.
+ *     Set of composite panels controlled by a combo selection.
  *
  * Contributors:
  *     Donald Purnhagen <dpurnhagen@gmail.com>

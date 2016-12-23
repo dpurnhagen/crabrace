@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2016 Donald Purnhagen
+ *
+ * Description:
+ *     Example of a property page using composite panels controlled by 
+ *     a combo selection.
+ *
+ * Contributors:
+ *     Donald Purnhagen <dpurnhagen@gmail.com>
+ */
 package us.dpeg.crabrace.properties;
 
 import org.eclipse.core.resources.IResource;
