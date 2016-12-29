@@ -136,15 +136,20 @@ public class CrabraceProperties extends PropertyPage {
 				String message;
 				if (OWNER_DEFAULT.equalsIgnoreCase(owner)) {
 					StringBuilder sb = new StringBuilder();
-					sb.append("Blah\n\nBlah blah blah blah. Blah blah, blah blah-blah, blah blah. ");
-					sb.append("Blah, blah blah blah blah. Blah blah, blah blah-blah, blah blah. Blah!");
+					sb.append("Age:\t23\n");
+					sb.append("Home:\tOrlando, FL\n");
+					sb.append("Rank:\t13th in the world\n\n");
+					sb.append("Highly motivated racer. Admired by his competitors, although he can be a bit crabby at times.\n");
 					message = sb.toString();
 				} else {
 					message = "No information exists for: " + owner + "\n";
 				}
-				CopyableDialog dialog = new CopyableDialog(getShell(), "Owner Information");
-				dialog.setMessage(message);
-				dialog.open();
+				new CopyableDialog(
+						getShell(),
+						"Owner Information",
+						message,
+						true,
+						true).open();
 			}
 		});
 

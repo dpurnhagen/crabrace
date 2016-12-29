@@ -55,7 +55,7 @@ import org.eclipse.swt.widgets.Label;
  * }
  * </pre>
  *
- * @author Don Purnhagen
+ * @author dpurnhagen
  */
 public class ComboComposites extends Composite {
 	private Map<String, Composite> map;
