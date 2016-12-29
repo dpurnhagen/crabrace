@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import us.dpeg.crabrace.Messages;
+
 /**
  * Simple, resizable dialog box with a single text widget, a button to
  * copy the contents of the text widget to the clipboard, and an OK button.
@@ -127,7 +129,7 @@ public class CopyableDialog extends Dialog {
 	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, COPY_ID, "Copy All", false);
+		createButton(parent, COPY_ID, Messages.CopyableDialog_labelCopyAll, false);
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
 				true);
 	}

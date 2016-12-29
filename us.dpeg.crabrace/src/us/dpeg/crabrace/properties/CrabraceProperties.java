@@ -27,25 +27,27 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 
+import us.dpeg.crabrace.
+Messages;
 import us.dpeg.crabrace.controls.ComboComposites;
 import us.dpeg.crabrace.dialogs.CopyableDialog;
 
 public class CrabraceProperties extends PropertyPage {
 
-	private static final String LOOKS_DEFAULT = "5";
-	private static final String AGILITY_DEFAULT = "false";
-	private static final String PATH_TITLE = "Path:";
-	private static final String AGILITY_TITLE = "&Extra nimble";
-	private static final String AGILITY_PROPERTY = "AGILITY";
-	private static final String AGILITY_KEY = "Agility";
-	private static final String LOOKS_TITLE = "&Looks Factor:";
-	private static final String LOOKS_PROPERTY = "LOOKS";
-	private static final String LOOKS_KEY = "Looks";
-	private static final String OWNER_TITLE = "&Owner:";
-	private static final String OWNER_PROPERTY = "OWNER";
-	private static final String OWNER_KEY = "Owner";
-	private static final String OWNER_DEFAULT = "John Doe";
-	private static final String OWNER_BUTTON = "Information...";
+	private static final String LOOKS_DEFAULT = Messages.CrabraceProperties_valueLooksDefault;
+	private static final String AGILITY_DEFAULT = Messages.CrabraceProperties_valueAgilityDefault;
+	private static final String PATH_TITLE = Messages.CrabraceProperties_labelPath;
+	private static final String AGILITY_TITLE = Messages.CrabraceProperties_labelExtraNimble;
+	private static final String AGILITY_PROPERTY = "AGILITY"; //$NON-NLS-1$
+	private static final String AGILITY_KEY = "Agility"; //$NON-NLS-1$
+	private static final String LOOKS_TITLE = Messages.CrabraceProperties_labelLooksFactor;
+	private static final String LOOKS_PROPERTY = "LOOKS"; //$NON-NLS-1$
+	private static final String LOOKS_KEY = "Looks"; //$NON-NLS-1$
+	private static final String OWNER_TITLE = Messages.CrabraceProperties_labelOwner;
+	private static final String OWNER_PROPERTY = "OWNER"; //$NON-NLS-1$
+	private static final String OWNER_KEY = "Owner"; //$NON-NLS-1$
+	private static final String OWNER_DEFAULT = Messages.CrabraceProperties_valueOwnerDefault;
+	private static final String OWNER_BUTTON = Messages.CrabraceProperties_labelInformation;
 
 	private Text txtOwner;
 	private Button btnNimble;
@@ -102,7 +104,7 @@ public class CrabraceProperties extends PropertyPage {
 
 		// Slider for looks field
 		Label lblUgly = new Label(cLooks, SWT.None);
-		lblUgly.setText("Ugly");
+		lblUgly.setText(Messages.CrabraceProperties_labelUgly);
 		scaleLooks = new Scale(cLooks, SWT.HORIZONTAL);
 		scaleLooks.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		scaleLooks.setMinimum(1);
@@ -110,7 +112,7 @@ public class CrabraceProperties extends PropertyPage {
 		scaleLooks.setIncrement(1);
 		scaleLooks.setSelection(5);
 		Label lblSexy = new Label(cLooks, SWT.None);
-		lblSexy.setText("Sexy");
+		lblSexy.setText(Messages.CrabraceProperties_labelSexy);
 
 		// Label for owner field
 		Label lblOwner = new Label(cOwner, SWT.NONE);
@@ -136,17 +138,17 @@ public class CrabraceProperties extends PropertyPage {
 				String message;
 				if (OWNER_DEFAULT.equalsIgnoreCase(owner)) {
 					StringBuilder sb = new StringBuilder();
-					sb.append("Age:\t23\n");
-					sb.append("Home:\tOrlando, FL\n");
-					sb.append("Rank:\t13th in the world\n\n");
-					sb.append("Highly motivated racer. Admired by his competitors, although he can be a bit crabby at times.\n");
+					sb.append(Messages.CrabraceProperties_info1);
+					sb.append(Messages.CrabraceProperties_info2);
+					sb.append(Messages.CrabraceProperties_info3);
+					sb.append(Messages.CrabraceProperties_info4);
 					message = sb.toString();
 				} else {
-					message = "No information exists for: " + owner + "\n";
+					message = Messages.CrabraceProperties_info5 + owner + "\n"; //$NON-NLS-2$
 				}
 				new CopyableDialog(
 						getShell(),
-						"Owner Information",
+						Messages.CrabraceProperties_titleOwnerInformation,
 						message,
 						true,
 						true).open();
@@ -156,19 +158,19 @@ public class CrabraceProperties extends PropertyPage {
 		// Populate fields
 		IResource element = (IResource) getElement();
 		try {
-			String agility = ((IResource) getElement()).getPersistentProperty(new QualifiedName("", AGILITY_PROPERTY));
+			String agility = ((IResource) getElement()).getPersistentProperty(new QualifiedName("", AGILITY_PROPERTY)); //$NON-NLS-1$
 			btnNimble.setSelection(Boolean.parseBoolean((agility != null) ? agility : AGILITY_DEFAULT));
 		} catch (CoreException e) {
 			btnNimble.setSelection(Boolean.parseBoolean(AGILITY_DEFAULT));
 		}
 		try {
-			String looks = ((IResource) getElement()).getPersistentProperty(new QualifiedName("", LOOKS_PROPERTY));
+			String looks = ((IResource) getElement()).getPersistentProperty(new QualifiedName("", LOOKS_PROPERTY)); //$NON-NLS-1$
 			scaleLooks.setSelection(Integer.parseInt((looks != null) ? looks : LOOKS_DEFAULT));
 		} catch (CoreException e) {
 			scaleLooks.setSelection(Integer.parseInt(LOOKS_DEFAULT));
 		}
 		try {
-			String owner = element.getPersistentProperty(new QualifiedName("", OWNER_PROPERTY));
+			String owner = element.getPersistentProperty(new QualifiedName("", OWNER_PROPERTY)); //$NON-NLS-1$
 			txtOwner.setText((owner != null) ? owner : OWNER_DEFAULT);
 		} catch (CoreException e) {
 			txtOwner.setText(OWNER_DEFAULT);
@@ -220,9 +222,9 @@ public class CrabraceProperties extends PropertyPage {
 		// store the value in the owner text field
 		IResource element = (IResource) getElement();
 		try {
-			element.setPersistentProperty(new QualifiedName("", AGILITY_PROPERTY), String.valueOf(btnNimble.getSelection()));
-			element.setPersistentProperty(new QualifiedName("", LOOKS_PROPERTY), String.valueOf(scaleLooks.getSelection()));
-			element.setPersistentProperty(new QualifiedName("", OWNER_PROPERTY), txtOwner.getText());
+			element.setPersistentProperty(new QualifiedName("", AGILITY_PROPERTY), String.valueOf(btnNimble.getSelection())); //$NON-NLS-1$
+			element.setPersistentProperty(new QualifiedName("", LOOKS_PROPERTY), String.valueOf(scaleLooks.getSelection())); //$NON-NLS-1$
+			element.setPersistentProperty(new QualifiedName("", OWNER_PROPERTY), txtOwner.getText()); //$NON-NLS-1$
 		} catch (CoreException e) {
 			return false;
 		}

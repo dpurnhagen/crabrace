@@ -21,6 +21,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import us.dpeg.crabrace.Messages;
+
 /**
  * Maintain a list of composites, which overlay the same space on the page.
  * Enabling visibility by a key string in a combo box. Create the
@@ -69,7 +71,7 @@ public class ComboComposites extends Composite {
 	 * @wbp.parser.constructor
 	 */
 	public ComboComposites(Composite parent) {
-		this(parent, "Pick One:");
+		this(parent, Messages.ComboComposites_LabelDefault);
 	}
 
 	/**
